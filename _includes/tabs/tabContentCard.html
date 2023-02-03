@@ -1,0 +1,28 @@
+<div class="row mt-3">
+
+    <div class="col-lg-4">
+        <img id="bg" style="display: none;" src="assets/img/card/blank_necromunda_card.png">
+        <img id="bg1" style="display: none;" src="assets/img/card/blank_necromunda_card_1.png">
+        <img id="bg2" style="display: none;" src="assets/img/card/blank_necromunda_card_2.png">
+
+        <canvas class="canvas rounded" id="canvas" width="912" height="1335 ">
+            Sorry, your browser doesn't support the &lt;canvas&gt; element.
+        </canvas>
+    </div>
+
+    <div class="col-lg-5">
+        <div class="scroll-area">
+            <div class="accordion">
+
+                {% include card/section-characteristics.html %}
+                {% include card/section-deployment.html %}
+
+
+            </div>
+
+            {% include card/section-actions.html %}
+
+        </div>
+    </div>
+
+</div>
