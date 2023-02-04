@@ -210,7 +210,7 @@ drawCardText = function (value) {
 
 drawDevelopment = function (primary, secondary) {
 
-    getContext().font = 'bold 32px franklin-gothic-book';
+    getContext().font = 'bold 26px franklin-gothic-book';
     getContext().fillStyle = 'black';
     getContext().textAlign = "left";
     getContext().textBaseline = "middle";
@@ -218,8 +218,8 @@ drawDevelopment = function (primary, secondary) {
     writeScaled("Primary: ", { x: x, y: 890 });
     writeScaled("Secondary: ", { x: x, y: 930 });
     getContext().font = '30px franklin-gothic-book';
-    writeScaled(primary, { x: x+120, y: 890 });
-    writeScaled(secondary, { x: x+158, y: 930 });
+    writeScaled(primary, { x: x+95, y: 890 });
+    writeScaled(secondary, { x: x+125, y: 930 });
     
     
 }
