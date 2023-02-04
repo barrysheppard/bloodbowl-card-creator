@@ -193,8 +193,14 @@ drawCardText = function (value) {
     getContext().textAlign = "left";
     getContext().textBaseline = "middle";
 
-    lineHeight = 50;
+    if (value.length>90){
+        lineHeight = 30;
+    }
+    else {
+        lineHeight = 42;
+    }
     fitWidth = 500;
+
 
     // Trying to get a bold and italic check going
     text_array = (splitWordWrap(getContext(), value, fitWidth));
