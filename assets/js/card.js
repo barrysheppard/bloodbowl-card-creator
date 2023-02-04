@@ -155,7 +155,13 @@ drawCardElementFromInputId = function (inputId, pixelPosition) {
 }
 
 drawCardName = function (value) {
-    getContext().font = 'italic 70px brothers-regular';
+
+    if(value.length < 18){
+        getContext().font = 'italic 70px brothers-regular';
+    } else {
+        getContext().font = 'italic 50px brothers-regular';
+    }
+    
     getContext().fillStyle = 'black';
     getContext().textAlign = "left";
     getContext().textBaseline = "middle";
