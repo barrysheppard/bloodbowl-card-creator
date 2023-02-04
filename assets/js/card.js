@@ -186,6 +186,14 @@ drawFooter = function (value) {
     writeScaled(value, { x: 90, y: 990 });
 }
 
+drawPositionName = function (value) {
+    getContext().font = '50px brothers-regular';
+    getContext().fillStyle = 'white';
+    getContext().textAlign = "center";
+    getContext().textBaseline = "middle";
+    writeScaled(value, { x: 480, y: 1010 });
+}
+
 drawCardText = function (value) {
 
     getContext().font = '36px franklin-gothic-book';
@@ -380,6 +388,7 @@ function readControls() {
     data.teamName = document.getElementById("teamName").value;
     data.footer = document.getElementById("footer").value;
     data.cardText = document.getElementById("cardText").value;
+    data.positionName = document.getElementById("positionName").value;
     data.ma = document.getElementById("ma").value;
     data.st = document.getElementById("st").value;
     data.ag = document.getElementById("ag").value;
@@ -407,6 +416,7 @@ function drawCardFrame(fighterData){
     drawCardName(fighterData.cardName);
     drawTeamName(fighterData.teamName);
     drawFooter(fighterData.footer);
+    drawPositionName(fighterData.positionName);
     drawCardText(fighterData.cardText);
 
     primary = "";
@@ -560,6 +570,7 @@ async function writeControls(fighterData) {
     $("#cardName")[0].value = fighterData.cardName;
     $("#teamName")[0].value = fighterData.teamName;
     $("#footer")[0].value = fighterData.footer;
+    $("#positionName")[0].value = fighterData.positionName;
     $("#ma")[0].value = fighterData.ma;
     $("#st")[0].value = fighterData.st;
     $("#ag")[0].value = fighterData.ag;
@@ -577,13 +588,13 @@ function defaultFighterData() {
     fighterData.cardName = "Card Name";
     fighterData.teamName = "Team Name";
     fighterData.footer = "100,000";
+    fighterData.positionName = " ";
     fighterData.cardText = "Body Text";
     fighterData.ma = 4;
     fighterData.st = 4;
     fighterData.ag = 3;
     fighterData.pa = 3;
     fighterData.av = 9;
-    //fighterData.gangLogo = null;
     fighterData.imageUrl = null;
     fighterData.imageProperties = getDefaultModelImageProperties();
 
@@ -785,7 +796,7 @@ async function onSaveClicked() {
     
     data.imageUrl = null;
     // need to be explicit due to sub arrays
-    var exportObj = JSON.stringify(data, ['name', 'cardName', 'cardText', 'footer', 'ma', 'st', 'ag', 'pa', 'av', 'teamName',], 4);
+    var exportObj = JSON.stringify(data, ['name', 'cardName', 'cardText', 'footer', 'positionName', 'ma', 'st', 'ag', 'pa', 'av', 'teamName',], 4);
     var exportName = data.cardName;
 
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(exportObj);
