@@ -172,7 +172,7 @@ drawTeamName = function (value) {
     getContext().textAlign = "left";
     getContext().textBaseline = "middle";
     getContext().rotate(-6 * Math.PI / 180);
-    writeScaled(value, { x: 60 +3, y: 125+3 });
+    writeScaled(value, { x: 60 +4, y: 125+4 });
     getContext().fillStyle = 'white';
     writeScaled(value, { x: 60, y: 125 });
     getContext().rotate(+6 * Math.PI / 180);
@@ -325,7 +325,7 @@ function drawModel(imageUrl, imageProps) {
 
 function getName() {
     //var textInput = $("#saveNameInput")[0];
-    return "Necromunda_Card";
+    return "BloodBowl_Card";
 }
 
 function setName(name) {
@@ -496,7 +496,8 @@ function drawCardFrame(fighterData){
 }
 
 render = function (fighterData) {
-
+    console.log("Render:");
+    console.log(fighterData);
     // First the textured background
     getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
 
@@ -566,6 +567,8 @@ async function writeControls(fighterData) {
     }
 
     setName(fighterData.name);
+    setModelImage(fighterData.imageUrl);
+    setModelImageProperties(fighterData.imageProperties);
     
     $("#cardName")[0].value = fighterData.cardName;
     $("#teamName")[0].value = fighterData.teamName;
@@ -577,19 +580,34 @@ async function writeControls(fighterData) {
     $("#pa")[0].value = fighterData.pa;
     $("#av")[0].value = fighterData.av;
     $("#cardText")[0].value = fighterData.cardText;
-    setModelImage(fighterData.imageUrl);
-    setModelImageProperties(fighterData.imageProperties);
 
+    document.getElementById('p_agility').checked = fighterData.p_agility;
+    document.getElementById('p_general').checked = fighterData.p_general;
+    document.getElementById('p_mutations').checked = fighterData.p_mutations;
+    document.getElementById('p_passing').checked = fighterData.p_passing;
+    document.getElementById('p_strength').checked = fighterData.p_strength;
+
+    document.getElementById('s_agility').checked = fighterData.s_agility;
+    document.getElementById('s_general').checked = fighterData.s_general;
+    document.getElementById('s_mutations').checked = fighterData.s_mutations;
+    document.getElementById('s_passing').checked = fighterData.s_passing;
+    document.getElementById('s_strength').checked = fighterData.s_strength;
+
+    // render the updated info
+    render(fighterData);
 }
 
 function defaultFighterData() {
     var fighterData = new Object;
-    fighterData.name = "Necromunda_Card";
+    fighterData.name = "BloodBowl_Card";
     fighterData.cardName = "Card Name";
     fighterData.teamName = "Team Name";
     fighterData.footer = "100,000";
     fighterData.positionName = " ";
     fighterData.cardText = "Body Text";
+    fighterData.imageUrl = null;
+    fighterData.imageProperties = getDefaultModelImageProperties();
+    
     fighterData.ma = 4;
     fighterData.st = 4;
     fighterData.ag = 3;
@@ -597,7 +615,16 @@ function defaultFighterData() {
     fighterData.av = 9;
     fighterData.imageUrl = null;
     fighterData.imageProperties = getDefaultModelImageProperties();
-
+    fighterData.p_agility = false;
+    fighterData.p_general = false;
+    fighterData.p_passing = false;
+    fighterData.p_mutations = false;
+    fighterData.p_strength = false;
+    fighterData.s_agility = false;
+    fighterData.s_general = false;
+    fighterData.s_passing = false;
+    fighterData.s_mutations = false;
+    fighterData.s_strength = false;
 
     return fighterData;
 }
@@ -613,7 +640,7 @@ function loadFighterDataMap() {
     }
     // Set up the map.
     var map = new Object;
-    map["Necromunda_Card"] = defaultFighterData();
+    map["BloodBowl_Card"] = defaultFighterData();
     saveFighterDataMap(map);
     return map;
 }
@@ -621,7 +648,7 @@ function loadFighterDataMap() {
 function loadLatestFighterData() {
     var latestCardName = window.localStorage.getItem("latestCardName");
     if (latestCardName == null) {
-        latestCardName = "Necromunda_Card";
+        latestCardName = "BloodBowl_Card";
     }
 
     console.log("Loading '" + latestCardName + "'...");
@@ -726,7 +753,6 @@ window.onload = function () {
     //window.localStorage.clear();
     var fighterData = loadLatestFighterData();
     writeControls(fighterData);
-    render(fighterData);
     refreshSaveSlots();
 }
 
@@ -768,7 +794,6 @@ function onClearCache() {
 function onResetToDefault() {
     var fighterData = defaultFighterData();
     writeControls(fighterData);
-    render(fighterData);
 }
 
 function refreshSaveSlots() {
@@ -793,16 +818,21 @@ function refreshSaveSlots() {
 async function onSaveClicked() {
     data = readControls();
     // temp null while I work out image saving
-    
-    data.imageUrl = null;
+    console.log(data);
+    data.base64Image = await handleImageUrlFromDisk(data.imageUrl)
+
     // need to be explicit due to sub arrays
-    var exportObj = JSON.stringify(data, ['name', 'cardName', 'cardText', 'footer', 'positionName', 'ma', 'st', 'ag', 'pa', 'av', 'teamName',], 4);
-    var exportName = data.cardName;
+    var exportObj = JSON.stringify(data, ['name', 
+    'imageUrl', 'imageProperties', 'offsetX', 'offsetY','scalePercent', 
+    'cardName', 'cardText', 'footer', 'positionName', 'ma', 'st', 'ag', 'pa', 'av', 
+    'p_agility', 'p_general', 'p_mutations', 'p_passing', 'p_strength',
+    's_agility', 's_general', 's_mutations', 's_passing', 's_strength', 
+    'teamName','base64Image'], 4);
 
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(exportObj);
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "bloodbowl_card_" + exportName + ".json");
+    downloadAnchorNode.setAttribute("download", "bloodbowl_card_" + data.cardName.replace(/ /g, "_") + ".json");
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
@@ -846,14 +876,17 @@ async function readJSONFile(file) {
 
 async function fileChange(file) {
     // Function to be triggered when file input changes
-    // As readJSONFile is a promise, it must resolve before the contents can be read - in this case logged to the console
-    //readJSONFile(file).then(json => data);
+    // As readJSONFile is a promise, it must resolve before the contents can be read
+    // in this case logged to the console
+
+    var saveJson = function (json) {
+        writeControls(json);
+    };
+
     readJSONFile(file).then(json =>
-        writeControls(json)
+        saveJson(json)
     );
-    readJSONFile(file).then(json =>
-        render(json)
-    );
+
 }
 
 onFighterImageUpload = function () {
