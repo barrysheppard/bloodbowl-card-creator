@@ -4,7 +4,7 @@
         <h2 class="h5 mb-0">
             <button class="btn btn-link" data-toggle="collapse" data-target="#fightersCollapseFive"
                 aria-expanded="false" aria-controls="fightersCollapseFive">
-                Text
+                Player Stats
             </button>
         </h2>
     </div>
@@ -13,21 +13,62 @@
         <div class="card-body">
 
             <div class="form-group">
-                <label for="cardName">Card Name</label>
+                <label for="cardName">Player Name</label>
                 <input class="form-control" type="text" id="cardName" name="cardName" value=" " oninput="onAnyChange()">
             </div>
 
-
             <div class="form-group">
-                <label for="cardText">Body Text</label>
-                <textarea class="form-control" id="cardText" name="cardText" rows="10"
-                    oninput="onAnyChange()">Body Text\n **Text starting with ** is Red</textarea>
+                <label for="cardName">Team Name</label>
+                <input class="form-control" type="text" id="teamName" name="teamName" value=" " oninput="onAnyChange()">
             </div>
 
             <div class="form-group">
-                <label for="footer">Footer</label>
+                <label for="cardText">Skills & Traits</label>
+                <textarea class="form-control" id="cardText" name="cardText" rows="3"
+                    oninput="onAnyChange()">Body Text</textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="footer">Gold Cost</label>
                 <input class="form-control" type="text" id="footer" name="footer" value=" " oninput="onAnyChange()">
             </div>
+
+            <div class="row">
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="ma">MA</label>
+                        <input class="form-control" id="ma" min="0" max="9" name="ma"
+                            oninput="onAnyChange()" type="number" value="4">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="st">ST</label>
+                        <input class="form-control" id="st" min="0" max="8" name="st"
+                            oninput="onAnyChange()" type="number" value="3">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="ag">AG</label>
+                        <input class="form-control" id="ag" min="0" max="6" name="ag"
+                            oninput="onAnyChange()" type="number" value="3">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="pa">PA</label>
+                        <input class="form-control" id="pa" min="0" max="6" name="pa"
+                            oninput="onAnyChange()" type="number" value="3">
+                    </div>
+                </div>
+                <div class="col-sm-3">
+                    <div class="form-group">
+                        <label for="av">AV</label>
+                        <input class="form-control" id="av" min="0" max="11" name="av"
+                            oninput="onAnyChange()" type="number" value="9">
+                    </div>
+                </div>
 
         </div>
     </div>

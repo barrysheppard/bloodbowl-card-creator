@@ -58,6 +58,32 @@
         url("../fonts/FrutigerLTStd-Light.ttf") format("truetype");
 }
 
+
+
+@font-face {
+    font-family: "franklin-gothic-book";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/franklin-gothic-book.eot");
+    src: url("../fonts/franklin-gothic-book.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/franklin-gothic-book.woff2") format("woff2"),
+        url("../fonts/franklin-gothic-book.woff") format("woff"),
+        url("../fonts/franklin-gothic-book.ttf") format("truetype");
+}
+
+
+
+@font-face {
+    font-family: "brothers-regular";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/brothers-regular.eot");
+    src: url("../fonts/brothers-regular.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/brothers-regular.woff2") format("woff2"),
+        url("../fonts/brothers-regular.woff") format("woff"),
+        url("../fonts/brothers-regular.ttf") format("truetype");
+}
+
 /* @media (prefers-color-scheme: dark) {
     a, .btn-link { color: tomato; }
 }

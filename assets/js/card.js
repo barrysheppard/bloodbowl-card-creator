@@ -155,38 +155,51 @@ drawCardElementFromInputId = function (inputId, pixelPosition) {
 }
 
 drawCardName = function (value) {
-    getContext().font = '90px built-titling';
-    getContext().fillStyle = 'white';
-    getContext().textAlign = "center";
+    getContext().font = 'italic 70px brothers-regular';
+    getContext().fillStyle = 'black';
+    getContext().textAlign = "left";
     getContext().textBaseline = "middle";
-    writeScaled(value, { x: getCanvas().width / 2, y: 165 });
+    getContext().rotate(-6 * Math.PI / 180);
+    writeScaled(value, { x: 48 +4, y: 180+4 });
+    getContext().fillStyle = 'white';
+    writeScaled(value, { x: 48, y: 180 });
+    getContext().rotate(+6 * Math.PI / 180);
+}
+
+drawTeamName = function (value) {
+    getContext().font = 'italic 40px brothers-regular';
+    getContext().fillStyle = 'black';
+    getContext().textAlign = "left";
+    getContext().textBaseline = "middle";
+    getContext().rotate(-6 * Math.PI / 180);
+    writeScaled(value, { x: 60 +3, y: 125+3 });
+    getContext().fillStyle = 'white';
+    writeScaled(value, { x: 60, y: 125 });
+    getContext().rotate(+6 * Math.PI / 180);
 }
 
 drawFooter = function (value) {
-    getContext().font = '50px bank-gothic';
-    getContext().fillStyle = '#5B150F';
-    getContext().textAlign = "center";
+    getContext().font = '30px brothers-regular';
+    getContext().fillStyle = 'white';
+    getContext().textAlign = "left";
     getContext().textBaseline = "middle";
-    writeScaled(value, { x: getCanvas().width / 2, y: 1245 });
+    writeScaled(value, { x: 90, y: 990 });
 }
 
 drawCardText = function (value) {
 
-    getContext().font = '36px frutiger-light';
+    getContext().font = '36px franklin-gothic-book';
     getContext().fillStyle = 'black';
-    getContext().textAlign = "center";
+    getContext().textAlign = "left";
     getContext().textBaseline = "middle";
 
     lineHeight = 50;
-    fitWidth = 800;
-
-    // This one works, commented out for testing
-    //    printAtWordWrap(getContext(), value, getCanvas().width / 2, 280, lineHeight, fitWidth);
+    fitWidth = 500;
 
     // Trying to get a bold and italic check going
     text_array = (splitWordWrap(getContext(), value, fitWidth));
 
-    printWithMarkup(getContext(), text_array, getCanvas().width / 2, 280, lineHeight);
+    printWithMarkup(getContext(), text_array, 265, 730, lineHeight);
 
 
 
@@ -245,13 +258,6 @@ function setSelectedRunemark(radioDiv, runemark, radioGroupName, bgColor) {
 }
 
 
-function getSelectedGangLogo() {
-    return getSelectedRunemark($('#gangLogoSelect')[0]);
-}
-
-function setSelectedGangLogo(runemark) {
-    setSelectedRunemark($('#gangLogoSelect')[0], runemark, "deployment", "white");
-}
 
 function drawImage(scaledPosition, scaledSize, image) {
     if (image != null) {
@@ -310,15 +316,16 @@ function getModelImage() {
 }
 
 function setModelImage(image) {
-    var imageSelect = $("#imageSelect")[0];
+    console.log("setModelImage:" + image);
+    $("#fighterImageUrl")[0].value = image;
 
-    if (image != null) {
-        // TODO: Not sure how to do this. It might not even be possible! Leave it for now...
-        // imageSelect.files[0] = image;
-    }
-    else {
-        imageSelect.value = null;
-    }
+    //  if (image != null) {
+    // TODO: Not sure how to do this. It might not even be possible! Leave it for now...
+    //    imageSelect.value = image;
+    // }
+    // else {
+    //    imageSelect.value = null;
+    // }
 }
 
 function getDefaultModelImageProperties() {
@@ -343,117 +350,45 @@ function setModelImageProperties(modelImageProperties) {
     $("#imageScalePercent")[0].value = modelImageProperties.scalePercent;
 }
 
-function getDefaultWeaponData() {
-    var weaponData = new Object;
-    weaponData.enabled = true;
-    weaponData.rangeMin = 0;
-    weaponData.rangeMax = 1;
-    weaponData.attacks = 1;
-    weaponData.strength = 3;
-    weaponData.damageBase = 1;
-    weaponData.damageCrit = 2;
-    weaponData.runemark = null;
-    return weaponData;
-}
-
-function getDefaultWeaponData1() {
-    var data = getDefaultWeaponData();
-    data.enabled = true;
-    return data;
-}
-
-function getDefaultWeaponData2() {
-    var data = getDefaultWeaponData();
-    data.enabled = false;
-    return data;
-}
-
-function readWeaponControls(weaponId) {
-    var weaponData = new Object;
-    var weaponDiv = $(weaponId);
-    weaponData.enabled = weaponDiv.find("#weaponEnabled")[0].checked;
-    weaponData.rangeMin = weaponDiv.find("#rangeMin")[0].value;
-    weaponData.rangeMax = weaponDiv.find("#rangeMax")[0].value;
-    weaponData.attacks = weaponDiv.find("#attacks")[0].value;
-    weaponData.strength = weaponDiv.find("#strength")[0].value;
-    weaponData.damageBase = weaponDiv.find("#damageBase")[0].value;
-    weaponData.damageCrit = weaponDiv.find("#damageCrit")[0].value;
-    weaponData.runemark = getSelectedRunemark(weaponDiv.find("#weaponRunemarkSelect")[0]);
-    return weaponData;
-}
-
-function writeWeaponControls(weaponId, weaponData, weaponName) {
-    weaponDiv = $(weaponId);
-    weaponDiv.find("#weaponEnabled")[0].checked = weaponData.enabled;
-    weaponDiv.find("#weaponInputs")[0].style.display = weaponData.enabled ? "block" : "none";
-    weaponDiv.find("#rangeMin")[0].value = weaponData.rangeMin;
-    weaponDiv.find("#rangeMax")[0].value = weaponData.rangeMax;
-    weaponDiv.find("#attacks")[0].value = weaponData.attacks;
-    weaponDiv.find("#strength")[0].value = weaponData.strength;
-    weaponDiv.find("#damageBase")[0].value = weaponData.damageBase;
-    weaponDiv.find("#damageCrit")[0].value = weaponData.damageCrit;
-    setSelectedRunemark(
-        weaponDiv.find("#weaponRunemarkSelect")[0],
-        weaponData.runemark,
-        weaponName,
-        "white");
-}
-
-function readTagRunemarks() {
-    var array = new Array;
-    var checkedBoxes = $("#tagRunemarkSelect").find('input:checked');
-    for (i = 0; i < checkedBoxes.length; i++) {
-        array.push(getImage(getLabel(checkedBoxes[i])).getAttribute("src"));
-    }
-    return array;
-}
-
-function setSelectedTagRunemarks(selectedRunemarksArray) {
-    var tagRunemarksDiv = $("#tagRunemarkSelect");
-    // uncheck all
-    {
-        var checked = tagRunemarksDiv.find('input:checked');
-        for (var i = 0; i < checked.length; i++) {
-            checked[i].checked = false;
-        }
-        var icons = tagRunemarksDiv.find('img');
-        for (var i = 0; i < icons.length; i++) {
-            icons[i].style.backgroundColor = "white";
-        }
-    }
-
-    for (var i = 0; i < selectedRunemarksArray.length; i++) {
-        var runemark = selectedRunemarksArray[i];
-        var queryString = "img[src='" + runemark + "']";
-        var imgs = tagRunemarksDiv.find(queryString);
-        if (imgs.length > 0) {
-            var checkbox = $(imgs[0].parentNode.parentNode).find("input")[0];
-            checkbox.checked = true;
-            // imgs[0].style.backgroundColor = "tomato";
-            imgs[0].style.backgroundColor = "#00bc8c";
-        }
-        else {
-            var newDiv =
-                addToImageCheckboxSelector(
-                    runemark,
-                    tagRunemarksDiv[0],
-                    "white");
-            // $(newDiv).find("img")[0].style.backgroundColor = "tomato";
-            $(newDiv).find("img")[0].style.backgroundColor = "#00bc8c";
-            $(newDiv).find("input")[0].checked = true;
-        }
-    }
-}
 
 function readControls() {
     var data = new Object;
     data.name = getName();
-    data.gangLogo = getSelectedGangLogo();
+    data.imageUrl = getFighterImageUrl();
+    data.imageProperties = getModelImageProperties();
     data.cardName = document.getElementById("cardName").value;
+    data.teamName = document.getElementById("teamName").value;
     data.footer = document.getElementById("footer").value;
     data.cardText = document.getElementById("cardText").value;
+    data.ma = document.getElementById("ma").value;
+    data.st = document.getElementById("st").value;
+    data.ag = document.getElementById("ag").value;
+    data.pa = document.getElementById("pa").value;
+    data.av = document.getElementById("av").value;
 
     return data;
+}
+
+function drawCardFrame(fighterData){
+    getContext().drawImage(document.getElementById('frame'), 0, 0, getCanvas().width, getCanvas().height);
+    getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+
+    drawCardName(fighterData.cardName);
+    drawTeamName(fighterData.teamName);
+    drawFooter(fighterData.footer);
+    drawCardText(fighterData.cardText);
+
+    // MA
+     drawNumber(fighterData.ma, 130, 255, false);
+    // ST
+    drawNumber(fighterData.st, 130, 395, false);
+    // AG
+    drawNumber(fighterData.ag, 130, 530, true);
+    // PA
+    drawNumber(fighterData.pa, 130, 670, true);
+    //AV
+    drawNumber(fighterData.av, 130, 805, true);
+
 }
 
 render = function (fighterData) {
@@ -461,55 +396,84 @@ render = function (fighterData) {
     // First the textured background
     getContext().drawImage(document.getElementById('bg1'), 0, 0, getCanvas().width, getCanvas().height);
 
-    // Next if selected the icon
-    if (!(document.getElementById('checkbox-assets/img/blank2.gif').checked)) {
-        if (fighterData.gangLogo != null) {
 
-            var scaledPosition = scalePixelPosition({ x: 330, y: 760 });
-            var scaledSize = scalePixelPosition({ x: 680, y: 680 });
-            var imageSrc = fighterData.gangLogo;
 
-            if (imageSrc != null) {
-                var image = new Image();
-                image.onload = function () {
-                    getContext().globalAlpha = 0.2;
-                    drawImage(scaledPosition, scaledSize, image);
-                    getContext().globalAlpha = 1;
-                    getContext().drawImage(document.getElementById('bg2'), 0, 0, getCanvas().width, getCanvas().height);
-                    // Name now covered so printed again
-                    drawCardName(fighterData.cardName);
-                    drawFooter(fighterData.footer);
-                    drawCardText(fighterData.cardText);
-                };
-                image.src = imageSrc;
-            }
+    if (fighterData.imageUrl) {
+        var image = new Image();
+        image.onload = function () {
+        var position = scalePixelPosition({ x: 100 + fighterData.imageProperties.offsetX, y: fighterData.imageProperties.offsetY });
+        var scale = fighterData.imageProperties.scalePercent / 100.0;
+        var width = image.width * scale;
+        var height = image.height * scale;
+        getContext().drawImage(image, position.x, position.y, width, height);
+        drawCardFrame(fighterData);
+        };
+    image.src = fighterData.imageUrl;
+    }
+    // next the frame elements
 
-        } else {
-            // next the frame elements
-            getContext().drawImage(document.getElementById('bg2'), 0, 0, getCanvas().width, getCanvas().height);
+    drawCardFrame(fighterData);
 
-            drawCardName(fighterData.cardName);
-            drawFooter(fighterData.footer);
+    
+}
 
-            drawCardText(fighterData.cardText);
-        }
+function drawNumber(num,x, y, plus){
+
+    if(num<1){
+        num = '-';
+        plus = false;
+    }
+    if(num>9){
+        getContext().drawImage(document.getElementById('sf1'), x-15, y, 35, 70);
+        x = x + 35-15;
+        num = num -10;
+    }
+    elementId = 'sf'+num;
+
+    if(num == 1) {
+        width = 35;
+        x = x+9;
     } else {
-        // next the frame elements
-        getContext().drawImage(document.getElementById('bg2'), 0, 0, getCanvas().width, getCanvas().height);
+        width = 53;
+    }
 
-        drawCardName(fighterData.cardName);
-        drawFooter(fighterData.footer);
-
-        drawCardText(fighterData.cardText);
+    getContext().drawImage(document.getElementById(elementId), x, y, width, 70);
+    if (plus){
+        getContext().drawImage(document.getElementById('sf+'), x+width, y, 39, 70);
     }
 }
 
-function writeControls(fighterData) {
+async function writeControls(fighterData) {
+
+    // here we check for base64 loaded image and convert it back to imageUrl
+    if (fighterData.base64Image != null) {
+
+        // first convert to blob
+        const dataToBlob = async (imageData) => {
+            return await (await fetch(imageData)).blob();
+        };
+        const blob = await dataToBlob(fighterData.base64Image);
+        // then create URL object
+        fighterData.imageUrl = URL.createObjectURL(blob);
+        // Now that's saved, clear out the base64 so we don't reassign
+        fighterData.base64Image = null;
+    } else {
+        fighterData.imageUrl = null;
+    }
+
     setName(fighterData.name);
-    setSelectedGangLogo(fighterData.gangLogo);
+    
     $("#cardName")[0].value = fighterData.cardName;
+    $("#teamName")[0].value = fighterData.teamName;
     $("#footer")[0].value = fighterData.footer;
+    $("#ma")[0].value = fighterData.ma;
+    $("#st")[0].value = fighterData.st;
+    $("#ag")[0].value = fighterData.ag;
+    $("#pa")[0].value = fighterData.pa;
+    $("#av")[0].value = fighterData.av;
     $("#cardText")[0].value = fighterData.cardText;
+    setModelImage(fighterData.imageUrl);
+    setModelImageProperties(fighterData.imageProperties);
 
 }
 
@@ -517,9 +481,17 @@ function defaultFighterData() {
     var fighterData = new Object;
     fighterData.name = "Necromunda_Card";
     fighterData.cardName = "Card Name";
-    fighterData.footer = "Footer";
-    fighterData.cardText = "Body Text\n\n**Text starting with ** is red";
-    fighterData.gangLogo = null;
+    fighterData.teamName = "Team Name";
+    fighterData.footer = "100,000";
+    fighterData.cardText = "Body Text";
+    fighterData.ma = 4;
+    fighterData.st = 4;
+    fighterData.ag = 3;
+    fighterData.pa = 3;
+    fighterData.av = 9;
+    //fighterData.gangLogo = null;
+    fighterData.imageUrl = null;
+    fighterData.imageProperties = getDefaultModelImageProperties();
 
 
     return fighterData;
@@ -570,7 +542,7 @@ function saveLatestFighterData() {
     }
 
     window.localStorage.setItem("latestCardName", fighterData.name);
-    saveFighterData(fighterData);
+    //saveFighterData(fighterData);
 }
 
 function loadFighterData(fighterDataName) {
@@ -635,7 +607,7 @@ async function saveFighterData(fighterData) {
     if (fighterData != null &&
         fighterData.name) {
         // handle images we may have loaded from disk...
-        fighterData.gangLogo = await handleImageUrlFromDisk(fighterData.gangLogo);
+        fighterData.imageUrl = await handleImageUrlFromDisk(fighterData.imageUrl);
 
         finishSaving();
     }
@@ -659,27 +631,7 @@ onAnyChange = function () {
     saveLatestFighterData();
 }
 
-onGangLogoSelectionChanged = function (radioButton, backgroundColor) {
-    var radioSection = radioButton.parentNode.parentNode;
-    var allRadioButtons = $('input', radioSection);
-    for (i = 0; i < allRadioButtons.length; i++) {
-        getImage(getLabel(allRadioButtons[i])).style.backgroundColor = backgroundColor;
-    }
 
-    // getImage(getLabel(radioButton)).style.backgroundColor = "tomato";
-    getImage(getLabel(radioButton)).style.backgroundColor = "#00bc8c";
-
-    onAnyChange();
-}
-
-onGangLogoFileSelect = function () {
-    var imageSelect = $("#additionalDeploymentMarkSelect")[0];
-    var selectGrid = $("#gangLogoSelect")[0];
-
-    for (i = 0; i < imageSelect.files.length; i++) {
-        addToImageRadioSelector(URL.createObjectURL(imageSelect.files[i]), selectGrid, "deployment", "black");
-    }
-}
 
 onWeaponRunemarkFileSelect = function (input, weaponName) {
     var grid = $(input.parentNode).find("#weaponRunemarkSelect")[0];
@@ -736,15 +688,16 @@ function refreshSaveSlots() {
 async function onSaveClicked() {
     data = readControls();
     // temp null while I work out image saving
+    
     data.imageUrl = null;
     // need to be explicit due to sub arrays
-    var exportObj = JSON.stringify(data, ['name', 'cardName', 'cardText', 'footer', 'gangLogo',], 4);
+    var exportObj = JSON.stringify(data, ['name', 'cardName', 'cardText', 'footer', 'ma', 'st', 'ag', 'pa', 'av', 'teamName',], 4);
     var exportName = data.cardName;
 
     var dataStr = "data:text/json;charset=utf-8," + encodeURIComponent(exportObj);
     var downloadAnchorNode = document.createElement('a');
     downloadAnchorNode.setAttribute("href", dataStr);
-    downloadAnchorNode.setAttribute("download", "necromunda_card_" + exportName + ".json");
+    downloadAnchorNode.setAttribute("download", "bloodbowl_card_" + exportName + ".json");
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
     downloadAnchorNode.remove();
@@ -754,7 +707,7 @@ function saveCardAsImage() {
     var element = document.createElement('a');
     data = readControls();
     element.setAttribute('href', document.getElementById('canvas').toDataURL('image/png'));
-    element.setAttribute('download', "necromunda_card_" + data.cardName + ".png");
+    element.setAttribute('download', "bloodbowl_card_" + data.cardName + ".png");
     element.style.display = 'none';
     document.body.appendChild(element);
     element.click();
@@ -796,4 +749,20 @@ async function fileChange(file) {
     readJSONFile(file).then(json =>
         render(json)
     );
+}
+
+onFighterImageUpload = function () {
+    image = getModelImage();
+    setModelImage(image);
+    var fighterData = readControls();
+    render(fighterData);
+    saveLatestFighterData();
+}
+
+function getFighterImageUrl() {
+    var imageSelect = $("#fighterImageUrl")[0].value;
+    // if (imageSelect.files.length > 0) {
+    //return URL.createObjectURL(imageSelect.files[0]);
+    // }
+    return imageSelect;
 }
