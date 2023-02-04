@@ -200,10 +200,24 @@ drawCardText = function (value) {
     text_array = (splitWordWrap(getContext(), value, fitWidth));
 
     printWithMarkup(getContext(), text_array, 265, 730, lineHeight);
-
-
-
 }
+
+drawDevelopment = function (primary, secondary) {
+
+    getContext().font = 'bold 32px franklin-gothic-book';
+    getContext().fillStyle = 'black';
+    getContext().textAlign = "left";
+    getContext().textBaseline = "middle";
+    x = 265;
+    writeScaled("Primary: ", { x: x, y: 890 });
+    writeScaled("Secondary: ", { x: x, y: 930 });
+    getContext().font = '30px franklin-gothic-book';
+    writeScaled(primary, { x: x+120, y: 890 });
+    writeScaled(secondary, { x: x+158, y: 930 });
+    
+    
+}
+
 
 function getLabel(element) {
     return $(element).prop("labels")[0];
@@ -365,6 +379,17 @@ function readControls() {
     data.ag = document.getElementById("ag").value;
     data.pa = document.getElementById("pa").value;
     data.av = document.getElementById("av").value;
+    data.p_general = document.getElementById("p_general").checked;
+    data.p_agility = document.getElementById("p_agility").checked;
+    data.p_strength = document.getElementById("p_strength").checked;
+    data.p_passing = document.getElementById("p_passing").checked;
+    data.p_mutations = document.getElementById("p_mutations").checked;
+    data.s_general = document.getElementById("s_general").checked;
+    data.s_agility = document.getElementById("s_agility").checked;
+    data.s_strength = document.getElementById("s_strength").checked;
+    data.s_passing = document.getElementById("s_passing").checked;
+    data.s_mutations = document.getElementById("s_mutations").checked;
+    
 
     return data;
 }
@@ -377,6 +402,69 @@ function drawCardFrame(fighterData){
     drawTeamName(fighterData.teamName);
     drawFooter(fighterData.footer);
     drawCardText(fighterData.cardText);
+
+    primary = "";
+    if(fighterData.p_agility){
+        primary = primary + "Agility";
+    }
+    if(primary!="" && fighterData.p_general){
+        primary = primary + ", ";
+    }
+    if(fighterData.p_general){
+        primary = primary + "General";
+    }
+    if(primary!="" && fighterData.p_mutations){
+        primary = primary + ", ";
+    }
+    if(fighterData.p_mutations){
+        primary = primary + "Mutations";
+    }
+    if(primary!="" && fighterData.p_passing){
+        primary = primary + ", ";
+    }
+    if(fighterData.p_passing){
+        primary = primary + "Passing";
+    }
+    if(primary!="" && fighterData.p_strength){
+        primary = primary + ", ";
+    }
+    if(fighterData.p_strength){
+        primary = primary + "Strength";
+    }
+
+
+    secondary = "";
+    if(fighterData.s_agility){
+        secondary = secondary + "Agility";
+    }
+    if(secondary!="" && fighterData.s_general){
+        secondary = secondary + ", ";
+    }
+    if(fighterData.s_general){
+        secondary = secondary + "General";
+    }
+    if(secondary!="" && fighterData.s_mutations){
+        secondary = secondary + ", ";
+    }
+    if(fighterData.s_mutations){
+        secondary = secondary + "Mutations";
+    }
+    if(secondary!="" && fighterData.s_passing){
+        secondary = secondary + ", ";
+    }
+    if(fighterData.s_passing){
+        secondary = secondary + "Passing";
+    }
+    if(secondary!="" && fighterData.s_strength){
+        secondary = secondary + ", ";
+    }
+    if(fighterData.s_strength){
+        secondary = secondary + "Strength";
+    }
+
+    
+    drawDevelopment(primary, secondary);
+    
 
     // MA
      drawNumber(fighterData.ma, 130, 255, false);
@@ -419,7 +507,7 @@ render = function (fighterData) {
 
 function drawNumber(num,x, y, plus){
 
-    if(num<1){
+    if(num<1 || num>11 ) {
         num = '-';
         plus = false;
     }
