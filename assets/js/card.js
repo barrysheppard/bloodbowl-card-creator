@@ -417,7 +417,9 @@ function readControls() {
 
 function drawCardFrame(fighterData){
     getContext().drawImage(document.getElementById('frame'), 0, 0, getCanvas().width, getCanvas().height);
-    getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+    if(!document.getElementById("removeBorder").checked){
+        getContext().drawImage(document.getElementById('border'), 0, 0, getCanvas().width, getCanvas().height);
+    }
 
     drawCardName(fighterData.cardName);
     drawTeamName(fighterData.teamName);
