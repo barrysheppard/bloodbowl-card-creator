@@ -11,12 +11,14 @@
     <meta name="format-detection" content="telephone=no">
     <meta name="viewport"
         content="initial-scale=1, maximum-scale=1, shrink-to-fit=no, user-scalable=no, width=device-width">
-    <title>Boodbowl Card Creator</title>
+    <title>Warcry plays Creator</title>
     <meta name="color-scheme" content="dark light">
     <link rel="stylesheet" href="assets/css/main.css">
     <link rel="apple-touch-icon" sizes="180x180" href="assets/favicons/apple-touch-icon.png">
     <link rel="icon" type="image/png" sizes="32x32" href="assets/favicons/favicon-32x32.png">
     <link rel="icon" type="image/png" sizes="16x16" href="assets/favicons/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="192x192" href="assets/favicons/android-chrome-192x192.png">
+    <link rel="icon" type="image/png" sizes="512x512" href="assets/favicons/android-chrome-512x512.png">
     <link rel="manifest" href="assets/favicons/site.webmanifest">
     <link rel="mask-icon" href="assets/favicons/safari-pinned-tab.svg" color="#ff0000">
     <meta name="msapplication-TileColor" content="#ff0000">
@@ -24,6 +26,12 @@
 </head>
 
 <body>
+    <div class="font-hack2 sr-only" style="font-family:'built-titling';visibility:hidden;">Nothing to see here, move
+        along…</div>
+    <div class="font-hack3 sr-only" style="font-family:'brothers-regular';visibility:hidden;">Nothing to see here, move
+        along…</div>
+    <div class="font-hack3 sr-only" style="font-family:'franklin-gothic-book';visibility:hidden;">Nothing to see here, move
+        along…</div>
 
     <div class="container-fluid">
 
@@ -41,29 +49,30 @@
                                 width="150" height="30"></a>
                     </li>
                     <li class="nav-item">
-                        <a class="nav-link" href="index.html" onclick="onClearCache()">Player Card</a>
+                        <a class="nav-link" href="index.html" onclick="onClearCache()">Players</a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link active" href="playbook.html" onclick="onClearCache()">Plays</a>
                     </li>
 
                     <li class="nav-item">
-                        <a class="nav-link" href="playbook.html" onclick="onClearCache()">Plays</a>
+                        <a class="nav-link" href="instructions.html" onclick="onClearCache()">Instructions</a>
                     </li>
-
-                    <li class="nav-item">
-                        <a class="nav-link active" href="instructions.html" onclick="onClearCache()">Instructions</a>
-                    </li>
-                </ul>
-
                 </ul>
             </div>
 
         </nav>
 
-        {% include tabs/tabContentInstructions.html %}
+        {% include tabs/tabContentplays.html %}
 
     </div>
 
     <script src="assets/vendors/jquery.js"></script>
+    <script src="assets/vendors/popper.min.js"></script>
     <script src="assets/vendors/bootstrap.min.js"></script>
+    <script src="assets/js/plays.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/fuse.js/dist/fuse.js"></script>
+
 
 </body>
 

@@ -23,15 +23,15 @@
             </div>
 
             <div class="form-group">
-                <label for="cardText">Skills & Traits</label>
-                <textarea class="form-control" id="cardText" name="cardText" rows="3"
-                    oninput="onAnyChange()">Body Text</textarea>
+                <label for="playerType">Player Type</label>
+                <select class="form-control" id="playerType" name="playerType" onchange="onAnyChange()">
+                    <optgroup label="Card Type">
+                    <option value="roster" selected>Roster Player</option>
+                    <option value="star">Star Player</option>
+                </optgroup>
+                </select>
             </div>
-
-            <div class="form-group">
-                <label for="positionName">Position</label>
-                <input class="form-control" type="text" id="positionName" name="positionName" value=" " oninput="onAnyChange()">
-            </div>
+           
 
 
             <div class="row">
@@ -77,6 +77,55 @@
                     <input class="form-control" type="text" id="footer" name="footer" value=" " oninput="onAnyChange()">
                 </div>
             </div>
+             
+            <div class="form-group">
+                <label for="cardText">Skills & Traits</label>
+                <textarea class="form-control" id="cardText" name="cardText" rows="3"
+                    oninput="onAnyChange()">Body Text</textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="playsFor">Plays For</label>
+                    <input class="form-control" type="text" id="playsFor" name="playsFor" value=" " oninput="onAnyChange()">
+                </div>
+            </div>
+
+            <div class="form-group">
+                <label for="specialRules">Special Rules</label>
+                <textarea class="form-control" id="specialRules" name="specialRules" rows="3"
+                    oninput="onAnyChange()"></textarea>
+            </div>
+
+            <div class="form-group">
+                <label for="positionName">Position</label>
+                <input class="form-control" type="text" id="positionName" name="positionName" value=" " oninput="onAnyChange()">
+            </div>
+
+            <div class="row">
+                Secondary Skills:
+                <div class="col-sm-1">
+                    <label for="s_agility">A</label>
+                    <input type="checkbox" id="s_agility" name="s_agility" oninput="onAnyChange()">
+                </div>
+                    <div class="col-sm-1">
+                        <label for="s_general">G</label>
+                        <input type="checkbox" id="s_general" name="s_general" oninput="onAnyChange()">
+                    </div>
+                    <div class="col-sm-1">
+                        <label for="s_mutations">M</label>
+                        <input type="checkbox" id="s_mutations" name="s_mutations" oninput="onAnyChange()">
+                    </div>  
+                    <div class="col-sm-1">
+                        <label for="s_passing">P</label>
+                        <input type="checkbox" id="s_passing" name="s_passing" oninput="onAnyChange()">
+                    </div>
+                    <div class="col-sm-1">
+                        <label for="s_strength">S</label>
+                        <input type="checkbox" id="s_strength" name="s_strength" oninput="onAnyChange()">
+                    </div>
+            </div>
+
             <div class="row">
                 Primary Skills:
 
@@ -104,31 +153,6 @@
                         <input type="checkbox" id="p_strength" name="p_strength" oninput="onAnyChange()">
                     </div>
  
-
-            </div>
-            <div class="row">
-                Secondary Skills:
-                <div class="col-sm-1">
-                    <label for="s_agility">A</label>
-                    <input type="checkbox" id="s_agility" name="s_agility" oninput="onAnyChange()">
-                </div>
-                    <div class="col-sm-1">
-                        <label for="s_general">G</label>
-                        <input type="checkbox" id="s_general" name="s_general" oninput="onAnyChange()">
-                    </div>
-                    <div class="col-sm-1">
-                        <label for="s_mutations">M</label>
-                        <input type="checkbox" id="s_mutations" name="s_mutations" oninput="onAnyChange()">
-                    </div>  
-                    <div class="col-sm-1">
-                        <label for="s_passing">P</label>
-                        <input type="checkbox" id="s_passing" name="s_passing" oninput="onAnyChange()">
-                    </div>
-                    <div class="col-sm-1">
-                        <label for="s_strength">S</label>
-                        <input type="checkbox" id="s_strength" name="s_strength" oninput="onAnyChange()">
-                    </div>
-  
 
             </div>
         </div>
