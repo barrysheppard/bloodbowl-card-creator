@@ -21,9 +21,19 @@
 </div>
 
 <div class="mt-4">
+    <select id="sel">
+    </select>
+    <br>
+    <button type="submit" class="btn btn-success" id="loadPlayFromList" onclick="loadPlayFromList()">
+        Load Play from List
+    </button> 
+</div>
+
+<div class="mt-4">
     <label for="loadbutton">Load card file</label>
     <input class="form-control-file" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
 </div>
+
 
 <div class="mt-4">
     <button type="submit" class="btn btn-success" id="clearCacheButton" onclick="onClearCache()">
@@ -31,6 +41,7 @@
     </button>
     <br><hr>
 </div>
+
 
 
 <div class="mt-4">

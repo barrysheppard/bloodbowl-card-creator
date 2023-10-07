@@ -32,23 +32,7 @@ getContext = function () {
 
 function getBackgroundImage() {
     const backgroundMap = {
-        'bg-01': 'bg-dark-102',
-        'bg-02': 'bg-dark-112',
-        'bg-03': 'bg-dark-302',
-        'bg-04': 'bg-dark-312',
-        'bg-05': 'bg-fire-102',
-        'bg-06': 'bg-fire-112',
         'bg-07': 'bg-ghur-401',
-        'bg-08': 'bg-ghur-402',
-        'bg-09': 'bg-ghur-403',
-        'bg-10': 'bg-ghur-404',
-        'bg-11': 'bg-ghur-501',
-        'bg-12': 'bg-christmas-001',
-        'bg-13': 'mordheim01',
-        'bg-14': 'bg-aos',
-        'bg-15': 'bg-green',
-        'bg-16': 'bg-red',
-        'bg-17': 'bg-dark-arcane',
     };
 
     const selectedOption = document.getElementById('background-list').value;
@@ -226,6 +210,7 @@ function readControls() {
     data.customBackgroundUrl = getCustomBackgroundUrl();
     data.customBackgroundProperties = getCustomBackgroundProperties();
     data.playName = document.getElementById("playName").value;
+    data.teamName = document.getElementById("teamName").value;
     data.bgselected = document.getElementById('background-list').value;
 
     for (var i = 1; i <= 11; i++) {
@@ -277,10 +262,10 @@ const renderCustomBackground = function(missionData) {
 const renderDefaultBackground = function(missionData) {
     getContext().drawImage(getBackgroundImage(), 0, 0, getCanvas().width, getCanvas().height);
     drawBorder();
-    renderFighterImage(missionData);
     drawDeployment();
+    renderFighterImage(missionData);
+    
     drawText();
-
 };
   
 
@@ -296,12 +281,10 @@ const renderFighterImage = function(missionData) {
             const width = image.width * scale;
             const height = image.height * scale;
             getContext().drawImage(image, position.x, position.y, width, height);
-            if(true){
-                //drawFrame();
-                drawOverlayTexts(missionData);
-
-            }
+            drawOverlayTexts(missionData);
             drawBorder();
+            drawDeployment();
+
         };
         image.src = missionData.imageUrl;
     } else {
@@ -349,6 +332,7 @@ async function writeControls(data) {
     setCustomBackground(data.customBackgroundUrl);
     setCustomBackgroundProperties(data.customBackgroundProperties);
     $("#playName")[0].value = data.playName;
+    $("#teamName")[0].value = data.teamName;
 
     // check and uncheck if needed
 
@@ -379,7 +363,8 @@ function defaultmissionData() {
     data.customBackgroundUrl = null;
     data.customBackgroundProperties = getDefaultModelImageProperties();
     data.base64CustomBackground = null;
-    data.playName = "The Chevron Defense";
+    data.playName = "The Chevron Defence";
+    data.teamName = "General";
 
     data.bgselected = "bg-07";
 
@@ -539,6 +524,9 @@ window.onload = function () {
     writeControls(missionData);
     refreshSaveSlots();
 
+    getPlayList()
+    // log response or catch error of fetch promise
+    .then((data) => updatePlayListDropdown(data))
 }
 
 function validateInput(input) {
@@ -614,7 +602,7 @@ async function onSaveClicked() {
     downloadAnchorNode.setAttribute("href", dataStr);
     file_name = "Bloodbowl_Play_";
 
-    file_name = file_name + data.playName.replace(/ /g, "_") + ".json";
+    file_name =  file_name + data.teamName.replace(/ /g, "_") + "_" + data.playName.replace(/ /g, "_") + ".json";
     downloadAnchorNode.setAttribute("download", file_name);
     document.body.appendChild(downloadAnchorNode); // required for firefox
     downloadAnchorNode.click();
@@ -627,7 +615,7 @@ function saveCardAsImage() {
     element.setAttribute('href', document.getElementById('canvas').toDataURL('image/png'));
     
     file_name = "Bloodbowl_Play_";
-    file_name = file_name + data.playName.replace(/ /g, "_") + ".png";
+    file_name = file_name + data.teamName.replace(/ /g, "_") + "_" + data.playName.replace(/ /g, "_") + ".png";
 
     element.setAttribute("download", file_name);
     element.style.display = 'none';
@@ -743,10 +731,9 @@ function drawOverlayTexts(missionData) {
     const {
       playName
     } = missionData;
-    drawMap();
     // These are the texts to overlay
+    drawMap();
     drawplayName(playName);
-
     drawBorder();
   
   }
@@ -919,37 +906,25 @@ function drawText(){
 
 function drawDeployment(){
 
-    if(true){
-    
+    var data = [];
 
-        var data = [];
+    for (var i = 1; i <= 11; i++) {
+        var xValue = document.getElementById("objective" + i + "X").value;
+        var yValue = document.getElementById("objective" + i + "Y").value;
+        var iconValue = document.getElementById("objective" + i + "Icon").value;
 
-        // Assuming you have 11 inputs with IDs "objective1X" to "objective11X",
-        // "objective1Y" to "objective11Y", and "objective1Icon" to "objective11Icon"
-        
-        for (var i = 1; i <= 11; i++) {
-            console.log("objective" + i + "X")
-            var xValue = document.getElementById("objective" + i + "X").value;
-            var yValue = document.getElementById("objective" + i + "Y").value;
-            var iconValue = document.getElementById("objective" + i + "Icon").value;
-        
-            // Assuming you want to store the values in an array of objects
-            data.push({
-                x: xValue,
-                y: yValue,
-                icon: iconValue
-            });
+        // Assuming you want to store the values in an array of objects
+        data.push({
+            x: xValue,
+            y: yValue,
+            icon: iconValue
+        });
+    }
+    // Draw circles with letters using data array
+    for (var i = 0; i < data.length; i++) {
+        if(data[i].icon != 0){
+            drawCircleWithLetter(data[i].x, data[i].y, data[i].icon);
         }
-        
-
-            // Draw circles with letters using data array
-        for (var i = 0; i < data.length; i++) {
-            if(data[i].icon != 0){
-                drawCircleWithLetter(data[i].x, data[i].y, data[i].icon);
-            }
-        }
-
-
     }
 }
 
@@ -979,6 +954,8 @@ function drawCircleWithLetter(x, y, Letter) {
     // Set text properties
     var fontSize = (Letter.length > 1) ? 38 : 42; // Reduce font size if Letter has two characters
     getContext().font = fontSize + 'px brothers-regular';
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
     ctx.fillStyle = document.getElementById("colorPickerText").value; // Text color
     ctx.stroke();
 
@@ -986,3 +963,26 @@ function drawCircleWithLetter(x, y, Letter) {
     ctx.fillText(Letter, circleX, circleY+2);
 }
 
+async function getPlayList(){
+    // await response of fetch call
+    let response = await fetch("assets/plays.json");
+    // only proceed once promise is resolved
+    let data = await response.json();
+    return data;
+}
+
+function loadPlayFromList(){
+    var x = document.getElementById("sel").selectedIndex;
+    var y = document.getElementById("sel").options;
+    console.log("Index: " + y[x].index + " is " + y[x].text);
+    getPlayList()
+    // log response or catch error of fetch promise
+    .then((data) => writeControls(data[y[x].index]));
+}
+
+function updatePlayListDropdown(data){
+    console.log("Test!");
+    $.each(data, function(i, option) {
+        $('#sel').append($('<option/>').attr("value", option.playName).text(option.teamName + " - " + option.playName));
+    });
+}
