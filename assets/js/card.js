@@ -632,8 +632,11 @@ function defaultFighterData() {
     fighterData.name = "BloodBowl_Card";
     fighterData.cardName = "Card Name";
     fighterData.teamName = "Team Name";
+    fighterData.playerType = "roster";
+    fighterData.playsFor = "";
+    fighterData.specialRules = "";
     fighterData.footer = "100,000";
-    fighterData.positionName = " ";
+    fighterData.positionName = "";
     fighterData.cardText = "Body Text";
     fighterData.imageUrl = null;
     fighterData.imageProperties = getDefaultModelImageProperties();
