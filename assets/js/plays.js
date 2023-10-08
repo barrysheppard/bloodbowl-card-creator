@@ -527,6 +527,30 @@ window.onload = function () {
     getPlayList()
     // log response or catch error of fetch promise
     .then((data) => updatePlayListDropdown(data))
+
+    // Get the select element
+    const imageSelect = document.getElementById("imageSelectList");
+
+    // Fetch image file names from the GitHub repository directory
+    fetch("https://api.github.com/repos/barrysheppard/bloodbowl-card-creator/git/trees/7c45c5794805da6173e17f89ff1f2427a72065f9?recursive=1")
+        .then(response => response.json())
+        .then(data => {
+            // Filter out files from the response
+            const imageFiles = data.tree.filter(item => item.type === 'blob' && item.path.startsWith('assets/img/logos/'));
+
+            // Populate the select dropdown with image file names
+            imageFiles.forEach(function(imageFile) {
+                const option = document.createElement("option");
+                option.value = imageFile.path; // Set the option's value to the image file path
+                option.text = imageFile.path.replace('assets/img/logos/', ''); // Display the image file name in the dropdown
+                imageSelect.appendChild(option); // Add the option to the select element
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching image files from GitHub: ", error);
+        });
+
+
 }
 
 function validateInput(input) {
@@ -981,8 +1005,23 @@ function loadPlayFromList(){
 }
 
 function updatePlayListDropdown(data){
-    console.log("Test!");
     $.each(data, function(i, option) {
         $('#sel').append($('<option/>').attr("value", option.playName).text(option.teamName + " - " + option.playName));
     });
 }
+
+function onImageSelectChange() {
+    const imageSelect = document.getElementById("imageSelectList");
+    const selectedImagePath = imageSelect.value;
+
+    // Handle the selected image path as needed
+    console.log("Selected Image Path:", selectedImagePath);
+
+    // If you want to set the selected image as the model image and render it, you can do something like this:
+    setModelImage(selectedImagePath);
+    var missionData = readControls();
+    render(missionData);
+    saveLatestmissionData();
+}
+
+

@@ -17,6 +17,15 @@
                 <input class="form-control-file" id="imageSelect" oninput="onFighterImageUpload()" type="file">
             </div>
 
+            <div class="form-group">
+                <label for="imageSelectList">Logo List</label>
+                <select class="form-control" id="imageSelectList" onchange="onImageSelectChange()">
+                    <option value="">Select an image</option>
+                    <!-- Options for images in the folder will be dynamically populated here -->
+                </select>
+            </div>
+            
+
             <input type="hidden" id="missionImageUrl" name="missionImageUrl" value="">
 
             <div class="form-group">
