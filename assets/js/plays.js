@@ -182,8 +182,6 @@ function setModelImageProperties(modelImageProperties) {
 }
 
 
-
-
 function getFighterImageUrl() {
     var imageSelect = $("#missionImageUrl")[0].value;
     // if (imageSelect.files.length > 0) {
@@ -274,8 +272,8 @@ const renderFighterImage = function(missionData) {
         const image = new Image();
         image.onload = function() {
             const position = scalePixelPosition({
-                x: 100+ missionData.imageProperties.offsetX,
-                y: 100 + missionData.imageProperties.offsetY
+                x: 372 +  missionData.imageProperties.offsetX,
+                y: 295 + missionData.imageProperties.offsetY
             });
             const scale = missionData.imageProperties.scalePercent / 100.0;
             const width = image.width * scale;
@@ -528,27 +526,7 @@ window.onload = function () {
     // log response or catch error of fetch promise
     .then((data) => updatePlayListDropdown(data))
 
-    // Get the select element
-    const imageSelect = document.getElementById("imageSelectList");
-
-    // Fetch image file names from the GitHub repository directory
-    fetch("https://api.github.com/repos/barrysheppard/bloodbowl-card-creator/git/trees/7c45c5794805da6173e17f89ff1f2427a72065f9?recursive=1")
-        .then(response => response.json())
-        .then(data => {
-            // Filter out files from the response
-            const imageFiles = data.tree.filter(item => item.type === 'blob' && item.path.startsWith('assets/img/logos/'));
-
-            // Populate the select dropdown with image file names
-            imageFiles.forEach(function(imageFile) {
-                const option = document.createElement("option");
-                option.value = imageFile.path; // Set the option's value to the image file path
-                option.text = imageFile.path.replace('assets/img/logos/', ''); // Display the image file name in the dropdown
-                imageSelect.appendChild(option); // Add the option to the select element
-            });
-        })
-        .catch(error => {
-            console.error("Error fetching image files from GitHub: ", error);
-        });
+    populateImageSelectDropdown()
 
 
 }
@@ -1010,14 +988,12 @@ function updatePlayListDropdown(data){
     });
 }
 
+
+
 function onImageSelectChange() {
     const imageSelect = document.getElementById("imageSelectList");
     const selectedImagePath = imageSelect.value;
 
-    // Handle the selected image path as needed
-    console.log("Selected Image Path:", selectedImagePath);
-
-    // If you want to set the selected image as the model image and render it, you can do something like this:
     setModelImage(selectedImagePath);
     var missionData = readControls();
     render(missionData);
@@ -1025,3 +1001,35 @@ function onImageSelectChange() {
 }
 
 
+
+
+
+function populateImageSelectDropdown() {
+    const imageSelect = document.getElementById("imageSelectList");
+    imageSelect.innerHTML = ""; // Clear existing options
+
+    // Add "-- None" option at the start
+    const noneOption = document.createElement("option");
+    noneOption.value = ""; // Set the value to an empty string or any default value
+    noneOption.text = "-- None";
+    imageSelect.appendChild(noneOption);
+
+    // Fetch image file names from the GitHub repository directory
+    fetch("https://api.github.com/repos/barrysheppard/bloodbowl-card-creator/git/trees/main?recursive=1")
+        .then(response => response.json())
+        .then(data => {
+            // Filter out files from the response
+            const imageFiles = data.tree.filter(item => item.type === 'blob' && item.path.startsWith('assets/img/logos/'));
+
+            // Populate the select dropdown with image file names
+            imageFiles.forEach(function(imageFile) {
+                const option = document.createElement("option");
+                option.value = imageFile.path; // Set the option's value to the image file path
+                option.text = imageFile.path.replace('assets/img/logos/', ''); // Display the image file name in the dropdown
+                imageSelect.appendChild(option); // Add the option to the select element
+            });
+        })
+        .catch(error => {
+            console.error("Error fetching image files from GitHub: ", error);
+        });
+}
