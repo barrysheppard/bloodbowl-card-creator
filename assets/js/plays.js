@@ -363,7 +363,6 @@ function defaultmissionData() {
     data.base64CustomBackground = null;
     data.playName = "The Chevron Defence";
     data.teamName = "General";
-
     data.bgselected = "bg-07";
 
 
