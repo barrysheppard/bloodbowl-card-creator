@@ -251,7 +251,6 @@ const renderCustomBackground = function(missionData) {
         getContext().drawImage(backgroundImage, position.x, position.y, width, height);
         renderFighterImage(missionData);
         drawDeployment();
-        drawText();
 
     };
     backgroundImage.src = missionData.customBackgroundUrl;
@@ -260,10 +259,9 @@ const renderCustomBackground = function(missionData) {
 const renderDefaultBackground = function(missionData) {
     getContext().drawImage(getBackgroundImage(), 0, 0, getCanvas().width, getCanvas().height);
     drawBorder();
-    drawDeployment();
     renderFighterImage(missionData);
+    drawDeployment();
     
-    drawText();
 };
   
 
@@ -827,83 +825,40 @@ function splitWordWrap(context, text, fitWidth) {
 }
 
 
+function drawText() {
+    const cardText = document.getElementById("textValue").value;
+    const selectedFontSize = document.getElementById("fontSize").value;
+    const lineHeight = parseInt(selectedFontSize);
+    const xPosition = 50;
+    const yStart = 80;
+    const borderWidth = 2;
 
-function drawText(){
-    
-    cardText = document.getElementById("textValue").value;
-
-    getContext().font = '32px Georgia, serif';
-
-        getContext().fillStyle = 'black';
-
-    
+    // Draw black border
+    getContext().font = `bold ${selectedFontSize}px IndieFlower`;
+    getContext().fillStyle = 'black';
     getContext().textAlign = "left";
-    getContext().textBaseline = "middle";
+    getContext().textBaseline = "top";
 
-    font_size = 32;
-    lineHeight = font_size;
-    getContext().font = font_size + 'px Georgia, serif';
+    const textLines = cardText.split('\n');
 
-    text_array = (splitWordWrap(getContext(), cardText, 800));
-
-    let xPosition = 180; // Initialize x-coordinate position
-
-    for (line in text_array) {
-        const text = text_array[line];
-        let startIndex = 0;
-        yStart = 180;
-
-        while (startIndex < text.length) {
-            const start = text.indexOf("**", startIndex);
-
-            if (start === -1) {
-                // No more ** sequences found in this line, print the rest in black
-                getContext().font = font_size + 'px Georgia, serif';
-                const printText = text.substring(startIndex);
-                const textWidth = getContext().measureText(printText).width;
-                getContext().fillText(printText, xPosition, yStart + (line * lineHeight));
-                xPosition += textWidth; // Update the x-coordinate position
-                break;
-            }
-
-            if (start > startIndex) {
-                // Print text before the ** in black
-                getContext().font = font_size + 'px Georgia, serif';
-                const printText = text.substring(startIndex, start);
-                const textWidth = getContext().measureText(printText).width;
-                getContext().fillText(printText, xPosition, yStart + (line * lineHeight));
-                xPosition += textWidth; // Update the x-coordinate position
-            }
-
-            const end = text.indexOf("**", start + 2);
-
-            if (end === -1) {
-                // If no closing ** found, print the rest in black
-                getContext().font = font_size + 'px Georgia, serif';
-                const printText = text.substring(start);
-                const textWidth = getContext().measureText(printText).width;
-                getContext().fillText(printText, xPosition, yStart + (line * lineHeight));
-                xPosition += textWidth; // Update the x-coordinate position
-                break;
-            }
-
-            // Print text between ** in special format
-            //getContext().fillStyle = '#eb4a04';
-            getContext().font = 'bold ' + font_size + 'px Georgia, serif';
-            const printTextBetween = text.substring(start + 2, end);
-            const textWidthBetween = getContext().measureText(printTextBetween).width;
-            getContext().fillText(printTextBetween, xPosition, yStart + (line * lineHeight));
-            getContext().font = font_size + 'px Georgia, serif';
-            xPosition += textWidthBetween; // Update the x-coordinate position
-
-            startIndex = end + 2;
-        }
-
-        // Reset x-coordinate position for the next line
-        xPosition = 180;
+    for (let line = 0; line < textLines.length; line++) {
+        const text = textLines[line];
+        getContext().fillText(text, xPosition - borderWidth, yStart + (line * lineHeight) - borderWidth);
+        getContext().fillText(text, xPosition - borderWidth, yStart + (line * lineHeight) + borderWidth);
+        getContext().fillText(text, xPosition + borderWidth, yStart + (line * lineHeight) - borderWidth);
+        getContext().fillText(text, xPosition + borderWidth, yStart + (line * lineHeight) + borderWidth);
     }
 
+    // Draw white text on top
+    getContext().fillStyle = 'white';
+
+    for (let line = 0; line < textLines.length; line++) {
+        const text = textLines[line];
+        getContext().fillText(text, xPosition, yStart + (line * lineHeight));
+    }
 }
+
+
 
 function drawDeployment(){
 
@@ -927,6 +882,7 @@ function drawDeployment(){
             drawCircleWithLetter(data[i].x, data[i].y, data[i].icon);
         }
     }
+    drawText();
 }
 
 

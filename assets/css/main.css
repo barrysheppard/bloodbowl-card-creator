@@ -24,6 +24,18 @@
         url("../fonts/rodchenkoctt.svg#rodchenkoctt") format("svg");
 }
 
+@font-face {
+    font-family: "IndieFlower";
+    font-style: normal;
+    font-weight: normal;
+    src: url("../fonts/IndieFlower.eot");
+    src: url("../fonts/IndieFlower.eot?#iefix") format("embedded-opentype"),
+        url("../fonts/IndieFlower.woff2") format("woff2"),
+        url("../fonts/IndieFlower.woff") format("woff"),
+        url("../fonts/IndieFlower.ttf") format("truetype"),
+        url("../fonts/IndieFlower.svg#IndieFlower.eot") format("svg");
+}
+
 
 @font-face {
     font-family: "bank-gothic";

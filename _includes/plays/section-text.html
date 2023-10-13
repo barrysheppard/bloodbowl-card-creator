@@ -8,7 +8,7 @@
             </button>
         </h2>
     </div>
-    
+
     <div class="collapse" id="missionsCollapseSix">
         <div class="card-body">
             <div class="form-group">
@@ -16,7 +16,11 @@
                 <textarea class="form-control" id="textValue" name="textValue" rows="4"
                     oninput="onAnyChange()"></textarea>
             </div>
-            Text on the same line between ** and ** will be rendered as bold.
+            <div class="form-group">
+                <label for="fontSize">Font Size</label>
+                <input type="number" class="form-control" id="fontSize" name="fontSize" min="1" step="1"  value="42"
+                    oninput="onAnyChange()" />
+            </div>
         </div>
     </div>
 </div>
