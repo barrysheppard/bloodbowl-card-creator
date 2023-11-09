@@ -52,7 +52,7 @@ function drawCardText() {
     var data = readControls();
 
     let xStart = getCanvas().width/2;
-    let defaultFontSize = 32;
+    let defaultFontSize = data.fontSizeSelector;
     let lineHeight = defaultFontSize * 1.2;
     let gapAfterTitle = 60;
 
@@ -423,9 +423,11 @@ function readControls() {
     data.durationText = document.getElementById("durationText").value;
     data.timing = document.getElementById("timingCheckbox").checked;
     data.timingText = document.getElementById("timingText").value;
+    data.fontSizeSelector = document.getElementById("fontSizeSelector").value;
 
     return data;
 }
+
 
 
 function drawCardFrame(fighterData){
@@ -466,8 +468,6 @@ render = function (fighterData) {
     
 }
 
-
-
 async function writeControls(fighterData) {
     if (fighterData.base64Image != null) {
         const dataToBlob = async (imageData) => {
@@ -483,7 +483,7 @@ async function writeControls(fighterData) {
     setName(fighterData.name);
     setModelImage(fighterData.imageUrl);
     setModelImageProperties(fighterData.imageProperties);
-    
+
     $("#cardName")[0].value = fighterData.cardName;
     $("#footer")[0].value = fighterData.footer;
     $("#cardText")[0].value = fighterData.cardText;
@@ -493,6 +493,7 @@ async function writeControls(fighterData) {
     $("#durationText")[0].value = fighterData.durationText;
     $("#timingCheckbox")[0].checked = fighterData.timing;
     $("#timingText")[0].value = fighterData.timingText;
+    $("#fontSizeSelector")[0].value = fighterData.fontSizeSelector; // Set the fontSizeSelector value
 
     render(fighterData);
 }
@@ -512,9 +513,11 @@ function defaultFighterData() {
     fighterData.footer = "Footer";
     fighterData.imageUrl = null;
     fighterData.imageProperties = getDefaultModelImageProperties();
+    fighterData.fontSizeSelector = 32; // Set the default font size to 32
     
     return fighterData;
 }
+
 
 
 function saveFighterDataMap(newMap) {
