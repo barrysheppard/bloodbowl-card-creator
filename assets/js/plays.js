@@ -33,6 +33,7 @@ getContext = function () {
 function getBackgroundImage() {
     const backgroundMap = {
         'bg-07': 'bg-ghur-401',
+        'bg2': 'bg2',
     };
 
     const selectedOption = document.getElementById('background-list').value;

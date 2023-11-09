@@ -1,0 +1,32 @@
+
+<div class="form-group form-check">
+    <input type="checkbox" class="form-check-input" id="removeBorder" onchange="onAnyChange()">
+    <label class="form-check-label" for="removeBorder">Remove border to add bleed area for printing</label>
+</div>
+<div class="mt-4">
+    <button type="submit" class="btn btn-success" id="saveCanvasButton" onclick="saveCardAsImage()">
+        Save card as image
+    </button>
+</div>
+
+<div class="mt-4">
+    <button type="submit" class="btn btn-success" id="saveButton" onclick="onSaveClicked()">
+        Save card as file
+    </button>
+</div>
+
+<div class="mt-4">
+    <label for="loadbutton">Load card file</label>
+    <input class="form-control-file" id="loadbutton" oninput="fileChange(this.files[0])" type="file">
+</div>
+
+<div class="mt-4">
+    <button type="submit" class="btn btn-success" id="clearCacheButton" onclick="onClearCache()">
+        Reset all
+    </button>
+</div>
+
+<div class="input-group mb-6 mt-2">
+    <br>
+    <br>
+</div>

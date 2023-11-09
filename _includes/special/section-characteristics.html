@@ -1,0 +1,66 @@
+
+<div class="card">
+
+    <div class="card-header" id="fightersHeadingFive">
+        <h2 class="h5 mb-0">
+            <button class="btn btn-link" data-toggle="collapse" data-target="#fightersCollapseFive"
+                aria-expanded="false" aria-controls="fightersCollapseFive">
+                Card Details
+            </button>
+        </h2>
+    </div>
+
+    <div class="collapse" id="fightersCollapseFive">
+        <div class="card-body">
+
+            <div class="form-group">
+                <label for="cardName">Card Name</label>
+                <input class="form-control" type="text" id="cardName" name="cardName" value="" oninput="onAnyChange()">
+            </div>
+
+            <div class="form-group">
+                <label for="cardText">Body Text</label>
+                <textarea class="form-control" id="cardText" name="cardText" rows="3"
+                    oninput="onAnyChange()">Body Text</textarea>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="timingCheckbox" onchange="onAnyChange()">
+                <label class="form-check-label" for="timingCheckbox">Timing</label>
+            </div>
+
+            <div class="form-group">
+                <label for="timingText">Timing Text</label>
+                <textarea class="form-control" id="timingText" name="timingText" rows="3" oninput="onAnyChange()"></textarea>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="durationCheckbox" onchange="onAnyChange()">
+                <label class="form-check-label" for="durationCheckbox">Duration</label>
+            </div>
+
+            <div class="form-group">
+                <label for="durationText">Duration Text</label>
+                <textarea class="form-control" id="durationText" name="durationText" rows="3" oninput="onAnyChange()"></textarea>
+            </div>
+
+            <div class="form-group form-check">
+                <input type="checkbox" class="form-check-input" id="effectCheckbox" onchange="onAnyChange()">
+                <label class="form-check-label" for="effectCheckbox">Effect</label>
+            </div>
+
+            <div class="form-group">
+                <label for="effectText">Effect Text</label>
+                <textarea class="form-control" id="effectText" name="effectText" rows="3" oninput="onAnyChange()"></textarea>
+            </div>
+
+            <div class="row">
+                <div class="col-sm-6">
+                    <label for="footer">Footer</label>
+                    <input class="form-control" type="text" id="footer" name="footer" value="" oninput="onAnyChange()">
+                </div>
+            </div>
+
+        </div>
+    </div>
+</div>
